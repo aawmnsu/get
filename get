@@ -1,0 +1,100 @@
+class BankAccount:
+    def __init__(self, account_number, account_holder, balance=0):
+        self.account_number = account_number
+        self.account_holder = account_holder
+        self.balance = balance
+
+    def deposit(self, amount):
+        self.balance += amount
+        print(f"存款成功！当前余额为：{self.balance}")
+
+    def withdraw(self, amount):
+        if self.balance >= amount:
+            self.balance -= amount
+            print(f"取款成功！当前余额为：{self.balance}")
+        else:
+            print("余额不足，取款失败！")
+
+    def display_balance(self):
+        print(f"账户余额为：{self.balance}")
+
+    def display_account_info(self):
+        print("账户信息：")
+        print(f"账户号码：{self.account_number}")
+        print(f"账户持有人：{self.account_holder}")
+        print(f"账户余额：{self.balance}")
+
+def create_account():
+    account_number = input("请输入账户号码：")
+    account_holder = input("请输入账户持有人姓名：")
+    initial_balance = float(input("请输入初始余额："))
+    account = BankAccount(account_number, account_holder, initial_balance)
+    print("账户创建成功！")
+    return account
+
+def main_menu():
+    accounts = []
+
+    while True:
+        print("银行账户管理系统")
+        print("1. 创建新账户")
+        print("2. 存款")
+        print("3. 取款")
+        print("4. 查询余额")
+        print("5. 查询账户信息")
+        print("6. 退出系统")
+        choice = input("请输入选项：")
+
+        if choice == "1":
+            account = create_account()
+            accounts.append(account)
+        elif choice == "2":
+            account_number = input("请输入账户号码：")
+            amount = float(input("请输入存款金额："))
+            found = False
+            for account in accounts:
+                if account.account_number == account_number:
+                    account.deposit(amount)
+                    found = True
+                    break
+            if not found:
+                print("找不到指定账户。")
+        elif choice == "3":
+            account_number = input("请输入账户号码：")
+            amount = float(input("请输入取款金额："))
+            found = False
+            for account in accounts:
+                if account.account_number == account_number:
+                    account.withdraw(amount)
+                    found = True
+                    break
+            if not found:
+                print("找不到指定账户。")
+        elif choice == "4":
+            account_number = input("请输入账户号码：")
+            found = False
+            for account in accounts:
+                if account.account_number == account_number:
+                    account.display_balance()
+                    found = True
+                    break
+            if not found:
+                print("找不到指定账户。")
+        elif choice == "5":
+            account_number = input("请输入账户号码：")
+            found = False
+            for account in accounts:
+                if account.account_number == account_number:
+                    account.display_account_info()
+                    found = True
+                    break
+            if not found:
+                print("找不到指定账户。")
+        elif choice == "6":
+            print("谢谢使用，再见！")
+            break
+        else:
+            print("无效的选项，请重新输入。")
+        print()
+
+main_menu
